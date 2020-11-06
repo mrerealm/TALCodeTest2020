@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TALCodeTest2020.Services;
+using TALCodeTest2020.Services.Interfaces;
 
 namespace TALCodeTest2020
 {
@@ -26,6 +28,8 @@ namespace TALCodeTest2020
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<IPremiumCalculationService, PremiumCalculationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

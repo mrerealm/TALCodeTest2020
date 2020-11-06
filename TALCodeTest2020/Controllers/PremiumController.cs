@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TALCodeTest2020.Models;
+using TALCodeTest2020.Services.Interfaces;
 
 namespace TALCodeTest2020.Controllers
 {
@@ -9,24 +11,36 @@ namespace TALCodeTest2020.Controllers
     [Route("[controller]")]
     public class PremiumController : ControllerBase
     {
-        private static readonly decimal[] OccupationRatingFactor = new decimal[]
-        {
-            1.0M, 1.25M, 1.50M, 1.75M
-        };
+        private readonly IPremiumCalculationService _premiumCalculationService;
 
         private readonly ILogger<PremiumController> _logger;
 
-        public PremiumController(ILogger<PremiumController> logger)
+        public PremiumController(ILogger<PremiumController> logger,
+            IPremiumCalculationService premiumCalculationService)
         {
             _logger = logger;
+            _premiumCalculationService = premiumCalculationService;
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] PremiumQuoteModel premiumQuote)
+        public async Task<IActionResult> GetAll()
         {
-            var rating = premiumQuote.OccupationRating >= 1 && premiumQuote.OccupationRating <= 4 ?
-                OccupationRatingFactor[premiumQuote.OccupationRating - 1] : 0;
-            var premium = (premiumQuote.Amount * rating * premiumQuote.Age) / 1000 * 12;
+            try
+            {
+                return Ok(await _premiumCalculationService.GetOccupationRatingsAsync());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.GetBaseException().Message, ex);
+                return BadRequest(ex.GetBaseException().Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("quote")]
+        public async Task<IActionResult> Get([FromQuery] PremiumQuoteModel premiumQuote)
+        {
+            var premium = await _premiumCalculationService.CalculatePremiumAsync(premiumQuote);
             return Ok(premium);
         }
     }
