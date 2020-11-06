@@ -22,7 +22,7 @@ namespace TALCodeTest2020.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] PremiumModel premiumQuote)
+        public IActionResult Get([FromQuery] PremiumQuoteModel premiumQuote)
         {
             var rating = premiumQuote.OccupationRating >= 1 && premiumQuote.OccupationRating <= 4 ?
                 OccupationRatingFactor[premiumQuote.OccupationRating - 1] : 0;
