@@ -15,6 +15,9 @@ namespace TALCodeTest2020.Services
 
         public Task<PremiumQuoteModel> CalculatePremiumAsync(PremiumQuoteModel premiumQuote)
         {
+            if (premiumQuote is null)
+                return Task.FromResult<PremiumQuoteModel>(premiumQuote);
+
             var age = 0;
             if (DateTime.TryParseExact(premiumQuote.DOB, "dd/MM/yyyy",
                 System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None,
