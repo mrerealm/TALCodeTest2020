@@ -7,5 +7,6 @@
         public int OccupationRating { get; set; }
         public string DOB { get; set; }
         public int Age { get; set; }
+        public string Msg { get; set; }
     }
 }

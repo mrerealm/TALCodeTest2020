@@ -12,14 +12,17 @@ namespace TALCodeTest2020.Controllers
     public class PremiumController : ControllerBase
     {
         private readonly IPremiumCalculationService _premiumCalculationService;
+        private readonly IOccupationRatingService _occupationRatingService;
 
         private readonly ILogger<PremiumController> _logger;
 
         public PremiumController(ILogger<PremiumController> logger,
-            IPremiumCalculationService premiumCalculationService)
+            IPremiumCalculationService premiumCalculationService,
+            IOccupationRatingService occupationRatingService)
         {
             _logger = logger;
             _premiumCalculationService = premiumCalculationService;
+            _occupationRatingService = occupationRatingService;
         }
 
         [HttpGet]
@@ -27,7 +30,7 @@ namespace TALCodeTest2020.Controllers
         {
             try
             {
-                return Ok(await _premiumCalculationService.GetOccupationRatingsAsync());
+                return Ok(await _occupationRatingService.GetOccupationRatingsAsync());
             }
             catch (Exception ex)
             {

@@ -94,5 +94,50 @@ namespace TALCodeTest2020.Tests
             result.Should().NotBeNull();
             result.Premium.Should().NotBe(0);
         }
+
+        [Fact]
+        public async System.Threading.Tasks.Task WhenPremiumQuoteRatingIsInvalid_ThenPremiumShouldBeZero()
+        {
+            var premiumQuote = new PremiumQuoteModel() { Amount = 10, DOB = "01/01/2000", OccupationRating = 0 };
+            var result = await _premiumCalculationService.CalculatePremiumAsync(premiumQuote);
+            premiumQuote.OccupationRating = 10;
+            var result2 = await _premiumCalculationService.CalculatePremiumAsync(premiumQuote);
+
+            result.Should().NotBeNull();
+            result.Premium.Should().Be(0);
+
+            result2.Should().NotBeNull();
+            result2.Premium.Should().Be(0);
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task WhenPremiumQuoteAgeAndDOBAreProvided_ThenDOBIsUsedAndPremiumShouldNotBeZero()
+        {
+            var invalidAge = 10;
+            var premiumQuote = new PremiumQuoteModel() { Amount = 10, Age = invalidAge, DOB = "01/01/1999", OccupationRating = 1 };
+            var result = await _premiumCalculationService.CalculatePremiumAsync(premiumQuote);
+
+            result.Should().NotBeNull();
+            result.Premium.Should().NotBe(0);
+            result.Age.Should().NotBe(invalidAge);
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task WhenPremiumQuoteAgeIsLessThen18_Or_GreaterThen100_ThenPremiumShouldBeZero()
+        {
+            var premiumQuote = new PremiumQuoteModel() { Amount = 10, Age = 101, OccupationRating = 1 };
+            var result = await _premiumCalculationService.CalculatePremiumAsync(premiumQuote);
+            premiumQuote.Age = 17;
+            var result2 = await _premiumCalculationService.CalculatePremiumAsync(premiumQuote);
+
+            result.Should().NotBeNull();
+            result.Premium.Should().Be(0);
+            result.Msg.Should().NotBeNull().Should().NotBe("");
+
+            result2.Should().NotBeNull();
+            result2.Premium.Should().Be(0);
+            result2.Msg.Should().NotBeNull().Should().NotBe("");
+        }
+
     }
 }

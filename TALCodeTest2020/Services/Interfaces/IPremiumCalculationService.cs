@@ -8,6 +8,5 @@ namespace TALCodeTest2020.Services.Interfaces
     public interface IPremiumCalculationService
     {
         public Task<PremiumQuoteModel> CalculatePremiumAsync(PremiumQuoteModel premiumQuote);
-        public Task<IEnumerable<OccupationRatingModel>> GetOccupationRatingsAsync();
     }
 }

@@ -8,15 +8,17 @@ namespace TALCodeTest2020.Services
 {
     public class PremiumCalculationService : IPremiumCalculationService
     {
-        private static readonly decimal[] OccupationRatingFactor = new decimal[]
-        {
-            1.0M, 1.25M, 1.50M, 1.75M
-        };
+        private readonly IOccupationRatingService _occupationRatingService;
 
-        public Task<PremiumQuoteModel> CalculatePremiumAsync(PremiumQuoteModel premiumQuote)
+        public PremiumCalculationService(IOccupationRatingService occupationRatingService)
+        {
+            _occupationRatingService = occupationRatingService;
+        }
+
+        public async Task<PremiumQuoteModel> CalculatePremiumAsync(PremiumQuoteModel premiumQuote)
         {
             if (premiumQuote is null)
-                return Task.FromResult<PremiumQuoteModel>(premiumQuote);
+                return await Task.FromResult(premiumQuote);
 
             var age = 0;
             if (DateTime.TryParseExact(premiumQuote.DOB, "dd/MM/yyyy",
@@ -28,29 +30,19 @@ namespace TALCodeTest2020.Services
             else
                 age = premiumQuote.Age;
 
-            var rating = premiumQuote.OccupationRating >= 1 && premiumQuote.OccupationRating <= 4 ?
-                OccupationRatingFactor[premiumQuote.OccupationRating - 1] : 0;
+            premiumQuote.Age = age;
+            if (age < 18 || age > 100)
+            {
+                premiumQuote.Msg = "Invalid age";
+                return await Task.FromResult(premiumQuote);
+            }
+
+            var rating = await _occupationRatingService.OccupationRatingFactorAsync(premiumQuote.OccupationRating);
             var premium = (premiumQuote.Amount * rating * age) / 1000 * 12;
 
-            premiumQuote.Age = age;
             premiumQuote.Premium = premium;
 
-            return Task.FromResult<PremiumQuoteModel>(premiumQuote);
-        }
-
-        public Task<IEnumerable<OccupationRatingModel>> GetOccupationRatingsAsync()
-        {
-            var result = new List<OccupationRatingModel>()
-            {
-                new OccupationRatingModel{ Occupation = "Cleaner", Rating = 3},
-                new OccupationRatingModel{ Occupation = "Doctor", Rating = 1},
-                new OccupationRatingModel{ Occupation = "Author", Rating = 2},
-                new OccupationRatingModel{ Occupation = "Farmer", Rating = 4},
-                new OccupationRatingModel{ Occupation = "Mechanic", Rating = 4},
-                new OccupationRatingModel{ Occupation = "Florist", Rating = 3},
-            };
-
-            return Task.FromResult<IEnumerable<OccupationRatingModel>>(result);
+            return await Task.FromResult(premiumQuote);
         }
     }
 }
