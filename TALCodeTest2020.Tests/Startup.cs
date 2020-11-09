@@ -10,6 +10,7 @@ namespace TALCodeTest2020.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IPremiumCalculationService, PremiumCalculationService>();
+            services.AddTransient<IOccupationRatingService, OccupationRatingService>();
         }
     }
 }

@@ -125,4 +125,5 @@ interface PremiumQuoteModel {
   occupationRating: number;
   age: number;
   dob: string;
+  msg: string;
 }

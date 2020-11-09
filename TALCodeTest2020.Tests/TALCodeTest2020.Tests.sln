@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TALCodeTest2020.Tests", "TALCodeTest2020.Tests.csproj", "{7EEB86D9-5776-453C-8E9F-5D2A67F44CB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EEB86D9-5776-453C-8E9F-5D2A67F44CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EEB86D9-5776-453C-8E9F-5D2A67F44CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EEB86D9-5776-453C-8E9F-5D2A67F44CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EEB86D9-5776-453C-8E9F-5D2A67F44CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
