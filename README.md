@@ -8,4 +8,4 @@ requirements: nodejs is running; angular cli installed; make sure run "ng serve 
 
 how to run: open solution in Visual Studio and on default browser.
 
-considerations: Used Reactive forms for validation UI uses bootstrap but not mobile layout; No validation of date of birth; Age is calculated from DOB; Occupation + Ratings provided by backend API; No auto-formatting date or currency
+considerations: Used Reactive forms for validation; UI uses bootstrap but not mobile layout; No validation of date of birth; Age is calculated from DOB; Occupation + Ratings provided by backend API; No auto-formatting date or currency
