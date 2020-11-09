@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TALCodeTest2020.Models;
 using TALCodeTest2020.Services.Interfaces;
@@ -15,7 +14,7 @@ namespace TALCodeTest2020.Services
 
         public Task<IEnumerable<OccupationRatingModel>> GetOccupationRatingsAsync()
         {
-            var result = new List<OccupationRatingModel>()
+                    var result = new List<OccupationRatingModel>()
             {
                 new OccupationRatingModel{ Occupation = "Cleaner", Rating = 3},
                 new OccupationRatingModel{ Occupation = "Doctor", Rating = 1},

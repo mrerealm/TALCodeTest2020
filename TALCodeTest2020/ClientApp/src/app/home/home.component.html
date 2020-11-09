@@ -15,12 +15,7 @@
                 </div>
                 <div class="form-group col-1">
                     <label>Age</label>
-                    <input type="text" formControlName="age" class="form-control"
-                           [ngClass]="{ 'is-invalid': submitted && f.age.errors }"
-                           pattern="[0-9]{1,3}" maxlength="3" />
-                    <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
-                        <div *ngIf="f.age.errors.required">Age required</div>
-                    </div>
+                    <input type="text" formControlName="age" class="form-control" readonly/>
                 </div>
                 <div class="form-group col-2">
                     <label>Date of birth</label>
